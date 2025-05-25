@@ -1,14 +1,16 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
+import bcrypt from 'bcryptjs';
+import '../types/express'; // Ensure the custom type is loaded
 
-export const getProfile = async (req: Request, res: Response) => {
-  const user = await User.findById(req.user?.id).select('-password');
+export const getProfile = async (req, res) => {
+  const user = await User.findById(req.user.id).select('-password');
   if (!user) return res.status(404).json({ message: 'User not found' });
   res.json(user);
 };
 
-export const updateProfile = async (req: Request, res: Response) => {
-  const user = await User.findById(req.user?.id);
+export const updateProfile = async (req, res) => {
+  const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ message: 'User not found' });
 
   user.name = req.body.name || user.name;

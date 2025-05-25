@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Court from '../models/Court';
+import Booking from '../models/Booking';
 
 export const getCourts = async (_req: Request, res: Response) => {
   const courts = await Court.find();

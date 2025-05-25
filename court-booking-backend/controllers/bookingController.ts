@@ -1,6 +1,5 @@
-import { Request, Response } from 'express';
+import {Response } from 'express';
 import Booking from '../models/Booking';
-import Court from '../models/Court';
 
 export const createBooking = async (req: any, res: Response) => {
   const { courtId, date, timeSlot } = req.body;
@@ -30,7 +29,6 @@ export const cancelBooking = async (req: any, res: Response) => {
   if (!booking || booking.user.toString() !== req.user.id) {
     return res.status(403).json({ message: 'Unauthorized or not found' });
   }
-
-  await booking.remove();
+  await booking.deleteOne();
   res.json({ message: 'Booking canceled' });
 };
